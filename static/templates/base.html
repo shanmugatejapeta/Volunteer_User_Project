@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriQuery</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Uncomment the line below if you have a custom CSS file -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" /> -->
+    <style>
+        /* Custom style for background color */
+        body {
+            background-color: aliceblue;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+    
+    .footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+        /* Custom style for header alignment */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px;
+            border-bottom: 1px solid #ccc;
+        }
+        /* Adjusting margin between nav links */
+        .nav-pills .nav-link {
+            margin-right: 10px;
+        }
+        .intro-text {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <p class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4"><b>AgriQuery</b></span>
+        </p>
+
+        <ul class="nav nav-pills">
+            {% if user.is_authenticated %}
+           <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %} 
+            <li><button type="submit" class="btn btn-danger">Logout</button></li>
+        </form>
+        
+    {% else %}
+    <a class="btn" style="color: black;" href="{% url 'home' %}" style="color:black;">Home</a>
+        <a class="btn btn-primary" href="{% url 'userlogin' %}" style="color:white;">Login</a>
+        <a class="btn btn-success" href="{% url 'signup' %}" style="color:white;">SignUp</a>
+    <a href="{% url 'vollogin' %}" class="btn btn-info">Login as Volunteer</a>
+    {% endif %}
+        </ul>
+    </header>
+</div>
+
+<div class="container">
+    {% block content %}
+    <!-- Content goes here -->
+    {% endblock %}
+</div>
+<div class="footer">
+    <div class="container">
+        <p><i>&copy; 2024 AgriQuery. All rights reserved.</i></p>
+    </div>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
