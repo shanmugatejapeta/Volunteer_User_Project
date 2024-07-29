@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from django.urls import reverse_lazy
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-!02tqiwt*(t)9rv*4if@zb^!s4i&0(-pc!$fsrapa+n2lzlc-o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -78,8 +79,12 @@ WSGI_APPLICATION = 'agri_queries.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'voluser',
+        'USER': 'postgres',
+        'PASSWORD':'postgres',
+        'HOST':'localhost',
+        'PORT':5432,
     }
 }
 
@@ -118,11 +123,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS=[
+STATIC_URL = 'shanu_static/'                     #for accessing through web.
+STATIC_ROOT = BASE_DIR / 'practice_static'       # static files are stored through collectstatic command to this directory.
+STATICFILES_DIRS=[                               # additional static files for the application.
     BASE_DIR / 'static'
 ]
+
+MEDIA_URL = 'media/'           #for accessing through web.
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_files')   # media files get stored at media_files directoryat root level.(i.e,at BASE_DIR)
+
+# '''these media files are stored at filesystem of the server at media_files directory according to the 
+# uploadto attribute at models, and at the database the relative path from media_root and can be accessed 
+# as object.image.url'''
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
